@@ -1,0 +1,26 @@
+CreateAccountDTO:
+  type: object
+  required:
+    - name
+    - iban
+    - status
+    - availableAmount
+  properties:
+    name:
+      type: string
+      example: "Petar Hristov"
+      description: Name of the account holder or account alias
+    iban:
+      type: string
+      example: "BG80BNBG96611020345678"
+      description: International Bank Account Number
+    status:
+      type: string
+      enum: [ACTIVE,FROZEN]
+      example: "ACTIVE"
+      description: Current status of the account
+    availableAmount:
+      type: number
+      format: decimal
+      example: 1200.50
+      description: Available balance of the account

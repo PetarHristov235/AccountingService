@@ -1,0 +1,28 @@
+CreateTransferDTO:
+  type: object
+  required:
+    - accountId
+    - beneficiaryAccountId
+    - type
+    - amount
+  properties:
+    accountId:
+      type: integer
+      format: int64
+      example: 123456
+      description: the account identifier
+    beneficiaryAccountId:
+      type: integer
+      format: int64
+      example: 654321
+      description: beneficiary account identifier
+    type:
+      type: string
+      enum: [CREDIT, DEBIT]
+      example: "CREDIT"
+      description: Type of the transfer
+    amount:
+      type: number
+      format: decimal
+      example: 1200.50
+      description: Available balance of the account

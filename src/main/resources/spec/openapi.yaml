@@ -1,0 +1,348 @@
+openapi: 3.0.3
+info:
+  title: Accounting Transactions API
+  version: 1.0.0
+  description: This API provides endpoints for creating, correcting, and managing transactions in the 
+    accounting system.
+tags:
+  - name: Accounts
+    description: Endpoints for managing bank accounts.
+  - name: Transfers
+    description: Endpoints for managing transfers between bank accounts.
+
+paths:
+  /account/api/v1/account-list:
+    get:
+      tags:
+        - Accounts
+      summary: Get List of Accounts
+      operationId: getAccountsList
+      responses:
+        '200':
+          description: List of accounts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /account/api/v1/account:
+    get:
+      tags:
+        - Accounts
+      summary: Get Account by ID
+      operationId: getAccountById
+      parameters:
+        - in: query
+          name: accountId
+          required: true
+          description: Account identifier
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Account retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /account/api/v1/account/create:
+    post:
+      tags:
+        - Accounts
+      summary: Create a New Account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './model/CreateAccountDTO.yaml#/CreateAccountDTO'
+      responses:
+        '201':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /account/api/v1/account/update:
+    put:
+      tags:
+        - Accounts
+      summary: Update an existing account
+      operationId: updateExistingAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './model/UpdateAccountDTO.yaml#/UpdateAccountDTO'
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /account/api/v1/account/freeze/{accountId}/{name}:
+    patch:
+      tags:
+        - Accounts
+      summary: Freeze account
+      operationId: freezeAccount
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+          description: Account identifier
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: name
+          required: true
+          description: Name of the account to freeze
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account frozen successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /account/api/v1/account/unfreeze/{accountId}/{name}:
+    patch:
+      tags:
+        - Accounts
+      summary: Unfreeze account
+      operationId: unfreezeAccount
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+          description: Account identifier
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: name
+          required: true
+          description: Name of the account to unfreeze
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account unfreezed successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/AccountDTO.yaml#/AccountDTO'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /transfer/api/v1/transfer:
+    get:
+      tags:
+        - Transfers
+      summary: Get transfer by ID
+      operationId: getTransferById
+      parameters:
+        - in: query
+          name: transferId
+          required: true
+          description: transfer identifier
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Transfer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/TransferDTO.yaml#/TransferDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /transfer/api/v1/transfer-by-account-id:
+    get:
+      tags:
+        - Transfers
+      summary: Get transfers by account ID
+      operationId: getTransfersByAccountId
+      parameters:
+        - in: query
+          name: accountId
+          required: true
+          description: Account identifier
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Transfer retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './model/TransferDTO.yaml#/TransferDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+  /transfer/api/v1/transfer/create:
+    post:
+      tags:
+        - Transfers
+      summary: Create new transfer
+      operationId: createTransfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './model/CreateTransferDTO.yaml#/CreateTransferDTO'
+      responses:
+        '201':
+          description: Transfer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './model/TransferDTO.yaml#/TransferDTO'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '409':
+          description: Transfer already exists
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: './model/ApplicationApiException.yaml#/ApplicationApiException'

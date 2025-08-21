@@ -1,0 +1,38 @@
+TransferDTO:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123456
+      description: Unique identifier of the account
+    accountId:
+      type: integer
+      format: int64
+      example: 123456
+      description: the account identifier
+    beneficiaryAccountId:
+      type: integer
+      format: int64
+      example: 654321
+      description: beneficiary account identifier
+    type:
+      type: string
+      enum: [CREDIT, DEBIT]
+      example: "CREDIT"
+      description: Type of the transfer
+    amount:
+      type: number
+      format: decimal
+      example: 1200.50
+      description: Available balance of the account
+    createdOn:
+      type: string
+      format: date-time
+      example: "2025-08-18T10:15:30Z"
+      description: Timestamp when the account was created
+    modifiedOn:
+      type: string
+      format: date-time
+      example: "2025-08-19T08:45:00Z"
+      description: Timestamp of the last update to the account
